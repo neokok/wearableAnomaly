@@ -1,0 +1,33 @@
+Package: wearableAnomaly
+Type: Package
+Title: Tools for Wearable Device Anomaly Detection
+Version: 0.0.0.9000
+Authors@R: c(
+    person(
+      given = "Neo",
+      family = "Kok",
+      email = "neokok@umich.edu",
+      role = c("aut", "cre")
+    )
+  )
+Description: Utilities to ingest, validate, and visualize wearable sensor
+    signals in preparation for anomaly detection workflows.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends:
+    R (>= 3.6.0)
+Imports:
+    Rcpp,
+    ggplot2,
+    dplyr
+Suggests:
+    testthat (>= 3.0.0),
+    pkgdown,
+    knitr,
+    rmarkdown
+LinkingTo:
+    Rcpp
+Config/testthat/edition: 3
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
