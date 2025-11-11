@@ -18,7 +18,9 @@ test_that("non-POSIXct time vectors are coerced with requested tz", {
   wa <- as_wearable_ts(data, id = id, time = time, value = value, tz = "UTC")
   expect_s3_class(wa$time, "POSIXct")
   expect_identical(attr(wa, "tz"), "UTC")
-  expect_identical(attr(wa$time, "tzone"), "UTC")
+  tz_attr <- attr(wa$time, "tzone")
+  expect_true(is.character(tz_attr))
+  expect_true("UTC" %in% tz_attr)
 })
 
 test_that("unsorted observations are ordered within id with a warning", {

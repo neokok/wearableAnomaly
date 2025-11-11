@@ -1,3 +1,7 @@
+`%||%` <- function(lhs, rhs) {
+	if (!is.null(lhs)) lhs else rhs
+}
+
 #' Generate a small synthetic CGM-like data set
 #'
 #' @param n_id Number of unique subjects to simulate.
