@@ -3,3 +3,6 @@
 ^\.github$
 ^README\.md$
 ^LICENSE\.md$
+^bench$
+^\.pkgdown-cache$
+^wearableAnomaly\.Rcheck$

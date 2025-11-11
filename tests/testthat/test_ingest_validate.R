@@ -37,6 +37,7 @@ test_that("unsorted observations are ordered within id with a warning", {
 test_that("duplicate (id, time) pairs are dropped with accounting", {
   data <- toy_cgm(n_id = 1, n = 4)
   dup_data <- rbind(data, data[2, , drop = FALSE])
+  dup_data <- dplyr::arrange(dup_data, id, time)
 
   expect_warning(
     wa <- as_wearable_ts(dup_data, id = id, time = time, value = value),

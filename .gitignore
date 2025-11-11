@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 scripts/dev-workflow.sh
+wearableAnomaly.Rcheck/
+.pkgdown-cache/

@@ -1,0 +1,19 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/as_wearable_ts.html</loc></url>
+<url><loc>/reference/detect_changepoints_pelt.html</loc></url>
+<url><loc>/reference/detect_flatlines.html</loc></url>
+<url><loc>/reference/detect_rate_change.html</loc></url>
+<url><loc>/reference/detect_saturation.html</loc></url>
+<url><loc>/reference/hello.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/resample_series.html</loc></url>
+<url><loc>/reference/toy_cgm.html</loc></url>
+<url><loc>/reference/validate_ts.html</loc></url>
+<url><loc>/reference/wearableAnomaly-package.html</loc></url>
+</urlset>
+
