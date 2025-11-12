@@ -156,5 +156,6 @@ validate_ts <- function(x, lower = attr(x, "lower"), upper = attr(x, "upper")) {
 }
 
 #' @rdname validate_ts
+#' @param issues Output tibble returned by [validate_ts()].
 #' @export
 has_issues <- function(issues) identical(nrow(issues) > 0, TRUE)

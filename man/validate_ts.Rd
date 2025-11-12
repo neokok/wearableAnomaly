@@ -14,6 +14,8 @@ has_issues(issues)
 
 \item{lower, upper}{Numeric bounds used to flag out-of-range values. Defaults
 to the attributes stored on \code{x}.}
+
+\item{issues}{Output tibble returned by \code{\link[=validate_ts]{validate_ts()}}.}
 }
 \value{
 A tibble recording detected issues with columns \code{issue}, \code{id},

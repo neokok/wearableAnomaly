@@ -10,6 +10,32 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// pairwise_energy
+Rcpp::NumericMatrix pairwise_energy(const Rcpp::NumericVector& x);
+RcppExport SEXP _wearableAnomaly_pairwise_energy(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(pairwise_energy(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// energy_stat_segment
+double energy_stat_segment(const Rcpp::NumericVector& x, int a, int b, int c, int d);
+RcppExport SEXP _wearableAnomaly_energy_stat_segment(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type a(aSEXP);
+    Rcpp::traits::input_parameter< int >::type b(bSEXP);
+    Rcpp::traits::input_parameter< int >::type c(cSEXP);
+    Rcpp::traits::input_parameter< int >::type d(dSEXP);
+    rcpp_result_gen = Rcpp::wrap(energy_stat_segment(x, a, b, c, d));
+    return rcpp_result_gen;
+END_RCPP
+}
 // pelt_core_meanvar
 Rcpp::IntegerVector pelt_core_meanvar(Rcpp::NumericVector x, int min_seg_len, double pen_value);
 RcppExport SEXP _wearableAnomaly_pelt_core_meanvar(SEXP xSEXP, SEXP min_seg_lenSEXP, SEXP pen_valueSEXP) {
@@ -25,6 +51,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_wearableAnomaly_pairwise_energy", (DL_FUNC) &_wearableAnomaly_pairwise_energy, 1},
+    {"_wearableAnomaly_energy_stat_segment", (DL_FUNC) &_wearableAnomaly_energy_stat_segment, 5},
     {"_wearableAnomaly_pelt_core_meanvar", (DL_FUNC) &_wearableAnomaly_pelt_core_meanvar, 3},
     {NULL, NULL, 0}
 };

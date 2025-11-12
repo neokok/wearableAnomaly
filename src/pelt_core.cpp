@@ -1,4 +1,4 @@
-#include "pelt_core.hpp"
+#include "pelt_core.h"
 
 #include <algorithm>
 #include <cmath>

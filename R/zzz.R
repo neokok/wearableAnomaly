@@ -12,5 +12,5 @@
 utils::globalVariables(c(
 	"bin", "value", "time", "id", "start", "end", "duration", "type", "strength",
 	"..start_idx", "..end_idx", "cp_time", "cp_index", "new_level", "new_var", "method",
-	"penalty"
+	"penalty", ".segment_id", "norm_score", "p_value"
 ))
