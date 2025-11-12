@@ -93,6 +93,8 @@ test_that("PELT output schema is correct", {
 
 test_that("PELT matches changepoint package within tolerance", {
   skip_if_not_installed("changepoint")
+  cpt_meanvar <- getExportedValue("changepoint", "cpt.meanvar")
+  cpts_fn <- getExportedValue("changepoint", "cpts")
   set.seed(456)
   n <- 200
   times <- seq.POSIXt(as.POSIXct("2025-01-01 00:00:00", tz = "UTC"), by = "5 min", length.out = n)
@@ -103,8 +105,8 @@ test_that("PELT matches changepoint package within tolerance", {
   res <- detect_changepoints_pelt(ts, cost = "meanvar", penalty = "MBIC", min_seg_len = 12)
   expect_true(nrow(res) >= 1)
 
-  cpt_fit <- changepoint::cpt.meanvar(values, method = "PELT", penalty = "MBIC", minseglen = 12)
-  cpt_indices <- changepoint::cpts(cpt_fit)
+  cpt_fit <- cpt_meanvar(values, method = "PELT", penalty = "MBIC", minseglen = 12)
+  cpt_indices <- cpts_fn(cpt_fit)
   if (length(cpt_indices) > 0) {
     diffs <- abs(res$cp_index - cpt_indices)
     expect_true(all(diffs <= 1))

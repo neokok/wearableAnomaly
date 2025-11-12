@@ -98,7 +98,11 @@ tibble has zero rows when no changepoints are detected.</p>
 <span class="r-in"><span>  id <span class="op">=</span> <span class="va">id</span>, time <span class="op">=</span> <span class="va">time</span>, value <span class="op">=</span> <span class="va">value</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">detect_changepoints_edivisive</span><span class="op">(</span><span class="va">ts</span>, min_seg_len <span class="op">=</span> <span class="fl">12</span>, R <span class="op">=</span> <span class="fl">99</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in energy_stat_segment(values, 1L, split, split + 1L, length(values)):</span> object '_wearableAnomaly_energy_stat_segment' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   id    cp_time             p_value method   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> id01  2025-01-01 <span style="color: #949494;">04:55:00</span>    0.01 edivisive</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> id01  2025-01-01 <span style="color: #949494;">09:50:00</span>    0.01 edivisive</span>
 </code></pre></div>
     </div>
   </div>
