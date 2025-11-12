@@ -6,3 +6,4 @@
 ^bench$
 ^\.pkgdown-cache$
 ^wearableAnomaly\.Rcheck$
+^docs$
