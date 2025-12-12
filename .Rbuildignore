@@ -1,9 +1,12 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
-^README\.md$
 ^LICENSE\.md$
 ^bench$
 ^\.pkgdown-cache$
 ^wearableAnomaly\.Rcheck$
 ^docs$
+^supp_files$
+^_pkgdown\.yml$
+^scripts$
+^\.lintr$

@@ -1,5 +1,11 @@
-pandoc: 3.7.0.2
+pandoc: 3.8.2.1
 pkgdown: 2.2.0
 pkgdown_sha: ~
-articles: {}
-last_built: 2025-11-14T16:33Z
+articles:
+  genai-tutorial: genai-tutorial.html
+  rcpp-comparison: rcpp-comparison.html
+  workflow: workflow.html
+last_built: 2025-12-12T20:15Z
+urls:
+  reference: https://neokok.github.io/wearableAnomaly/reference
+  article: https://neokok.github.io/wearableAnomaly/articles

@@ -4,15 +4,30 @@
 \alias{evaluate_methods}
 \title{Evaluate predicted anomaly segments}
 \usage{
-evaluate_methods(pred, truth, tolerance = "10 min")
+evaluate_methods(
+  pred,
+  truth,
+  tolerance = "10 min",
+  method = NULL,
+  runtime_sec = NULL
+)
 }
 \arguments{
-\item{pred, truth}{Data frames/tibbles with columns \code{id}, \code{start}, and \code{end}.}
+\item{pred, truth}{Data frames/tibbles with columns \code{id}, \code{start}, and \code{end}.
+\code{pred} can also be a named list of prediction objects (see Details).}
 
 \item{tolerance}{Allowed temporal slack interpreted by \code{\link[base:difftime]{base::as.difftime()}}.}
+
+\item{method}{Optional label applied when \code{pred} is a single data frame. When
+\code{pred} is a list, method labels default to list names or entry metadata.}
+
+\item{runtime_sec}{Optional runtime metadata (in seconds) for the supplied
+predictions. When \code{pred} is a list, runtime metadata can also be provided
+per entry (defaults to \code{NA}).}
 }
 \value{
-A named list with entries \code{precision}, \code{recall}, \code{f1}, and \code{iou}.
+A tibble with columns \code{method}, \code{runtime_sec}, \code{mean_n_cps},
+\code{precision}, \code{recall}, \code{f1}, \code{mae_cp}, and \code{iou}.
 }
 \description{
 Computes precision, recall, F1, and intersection-over-union (IoU) for

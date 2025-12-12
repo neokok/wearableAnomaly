@@ -115,7 +115,17 @@ test_that("E-divisive aligns with ecp::e.divisive when available", {
   res <- detect_changepoints_edivisive(series[["ts_tbl"]], min_seg_len = 20, R = 29, alpha = 0.1)
   expect_true(nrow(res) >= 1)
 
-  ecp_fit <- ecp_fn(X = matrix(values, ncol = 1), sig.lvl = 0.1, R = 29, beta = 0.05)
+  formals_ecp <- names(formals(ecp_fn))
+  ecp_args <- list(
+    X = matrix(values, ncol = 1),
+    R = 29
+  )
+  sig_name <- if ("alpha" %in% formals_ecp) "alpha" else "sig.lvl"
+  ecp_args[[sig_name]] <- 0.1
+  if ("beta" %in% formals_ecp) {
+    ecp_args$beta <- 0.05
+  }
+  ecp_fit <- do.call(ecp_fn, ecp_args)
   ecp_cps <- ecp_fit$estimates
   if (length(ecp_cps) <= 2) {
     skip("ecp did not report any changepoints for this seed.")

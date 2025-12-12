@@ -1,0 +1,55 @@
+template:
+  bootstrap: 5
+
+url: https://neokok.github.io/wearableAnomaly
+
+home:
+  title: "wearableAnomaly: anomaly detection for wearable time series"
+
+reference:
+  - title: Package overview
+    contents:
+      - wearableAnomaly-package
+  - title: Preprocessing & validation
+    contents:
+      - as_wearable_ts
+      - validate_ts
+      - has_issues
+      - resample_series
+  - title: Artifact detectors
+    contents:
+      - detect_flatlines
+      - detect_saturation
+      - detect_rate_change
+  - title: Changepoint detectors
+    contents:
+      - detect_changepoints_pelt
+      - detect_changepoints_edivisive
+  - title: Pipeline & scoring
+    contents:
+      - detect_anomalies
+      - merge_segments
+      - score_anomalies
+  - title: Evaluation & simulation
+    contents:
+      - evaluate_methods
+      - toy_cgm
+      - simulate_cgm_benchmark
+
+articles:
+  - title: Workflow
+    contents:
+      - workflow
+  - title: Backends & benchmarks
+    contents:
+      - rcpp-comparison
+  - title: GenAI workflow
+    contents:
+      - genai-tutorial
+
+navbar:
+  structure:
+    left:
+      - home
+      - reference
+      - articles

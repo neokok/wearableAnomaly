@@ -1,19 +1,20 @@
 #' @keywords internal
 .ed_cpp_available <- function() {
-	ns <- asNamespace("wearableAnomaly")
-	if (!exists("energy_stat_segment", envir = ns, inherits = FALSE)) {
-		return(FALSE)
-	}
-	info <- tryCatch(
-		getNativeSymbolInfo("_wearableAnomaly_energy_stat_segment",
-			PACKAGE = "wearableAnomaly"
-		),
-		error = function(e) NULL
-	)
-	if (is.null(info)) {
-		return(FALSE)
-	}
-	TRUE
+  ns <- asNamespace("wearableAnomaly")
+  if (!exists("energy_stat_segment", envir = ns, inherits = FALSE)) {
+    return(FALSE)
+  }
+  info <- tryCatch(
+    getNativeSymbolInfo(
+      "_wearableAnomaly_energy_stat_segment",
+      PACKAGE = "wearableAnomaly"
+    ),
+    error = function(e) NULL
+  )
+  if (is.null(info)) {
+    return(FALSE)
+  }
+  TRUE
 }
 
 #' @keywords internal

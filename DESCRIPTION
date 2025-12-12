@@ -24,7 +24,9 @@ Suggests:
     testthat (>= 3.0.0),
     pkgdown,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2
+VignetteBuilder: knitr
 LinkingTo:
     Rcpp
 Config/testthat/edition: 3

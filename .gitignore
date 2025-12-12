@@ -3,5 +3,12 @@
 .RData
 .Ruserdata
 scripts/dev-workflow.sh
+scripts/local_demo.R
 wearableAnomaly.Rcheck/
 .pkgdown-cache/
+R/accuracy.R
+supp_files/
+src/*.o
+src/*.so
+src/*.dll
+src/*.dylib
