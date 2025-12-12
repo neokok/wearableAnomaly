@@ -118,7 +118,7 @@ downstream processing.</p>
 resampled tibble:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ts_5min</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/resample_series.html">resample_series</a></span><span class="op">(</span><span class="va">ts</span>, by <span class="op">=</span> <span class="st">"5 min"</span>, agg <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span>
-<span><span class="va">flat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_flatlines.html">detect_flatlines</a></span><span class="op">(</span><span class="va">ts_5min</span>, tol <span class="op">=</span> <span class="fl">1e-5</span>, min_len <span class="op">=</span> <span class="st">"20 min"</span><span class="op">)</span></span>
+<span><span class="va">flat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_flatlines.html">detect_flatlines</a></span><span class="op">(</span><span class="va">ts_5min</span>, tol <span class="op">=</span> <span class="fl">2</span>, min_len <span class="op">=</span> <span class="st">"20 min"</span><span class="op">)</span></span>
 <span><span class="va">sat</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_saturation.html">detect_saturation</a></span><span class="op">(</span><span class="va">ts_5min</span>, min_len <span class="op">=</span> <span class="st">"15 min"</span><span class="op">)</span></span>
 <span><span class="va">roc</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_rate_change.html">detect_rate_change</a></span><span class="op">(</span><span class="va">ts_5min</span>, window <span class="op">=</span> <span class="st">"20 min"</span>, threshold <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p>Each detector produces tidy episodes (<code>id</code>,
@@ -198,7 +198,7 @@ changepoints.</p>
 <span><span class="va">ts_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_wearable_ts.html">as_wearable_ts</a></span><span class="op">(</span><span class="va">subject</span>, id <span class="op">=</span> <span class="va">id</span>, time <span class="op">=</span> <span class="va">time</span>, value <span class="op">=</span> <span class="va">value</span><span class="op">)</span></span>
 <span><span class="va">ts_reg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/resample_series.html">resample_series</a></span><span class="op">(</span><span class="va">ts_one</span>, by <span class="op">=</span> <span class="st">"5 min"</span>, agg <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">flat_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_flatlines.html">detect_flatlines</a></span><span class="op">(</span><span class="va">ts_reg</span>, min_len <span class="op">=</span> <span class="st">"15 min"</span>, tol <span class="op">=</span> <span class="fl">1e-5</span><span class="op">)</span></span>
+<span><span class="va">flat_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_flatlines.html">detect_flatlines</a></span><span class="op">(</span><span class="va">ts_reg</span>, min_len <span class="op">=</span> <span class="st">"15 min"</span>, tol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">sat_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_saturation.html">detect_saturation</a></span><span class="op">(</span><span class="va">ts_reg</span>, min_len <span class="op">=</span> <span class="st">"15 min"</span><span class="op">)</span></span>
 <span><span class="va">roc_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_rate_change.html">detect_rate_change</a></span><span class="op">(</span><span class="va">ts_reg</span>, window <span class="op">=</span> <span class="st">"20 min"</span>, threshold <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">pelt_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_changepoints_pelt.html">detect_changepoints_pelt</a></span><span class="op">(</span><span class="va">ts_reg</span>, penalty <span class="op">=</span> <span class="st">"MBIC"</span>, min_seg_len <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
@@ -219,7 +219,13 @@ changepoints.</p>
 <th align="right">duration_min</th>
 <th align="right">value</th>
 </tr></thead>
-<tbody></tbody>
+<tbody><tr class="odd">
+<td align="left">id001</td>
+<td align="left">2025-01-01 06:10:00</td>
+<td align="left">2025-01-01 06:25:00</td>
+<td align="right">15</td>
+<td align="right">120.8</td>
+</tr></tbody>
 </table>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -454,18 +460,6 @@ precision, recall, F1, and IoU with an adjustable tolerance:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluate_methods.html">evaluate_methods</a></span><span class="op">(</span>pred <span class="op">=</span> <span class="va">results</span><span class="op">$</span><span class="va">segments</span>, truth <span class="op">=</span> <span class="va">labels</span>, tolerance <span class="op">=</span> <span class="st">"10 min"</span><span class="op">)</span></span>
 <span><span class="va">metrics</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="next-steps">Next steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
-</h2>
-<ul>
-<li>Add domain-specific bounds (<code>lower</code>, <code>upper</code>)
-to <code><a href="../reference/as_wearable_ts.html">as_wearable_ts()</a></code>.</li>
-<li>Experiment with the <code>"clinical"</code> preset for higher
-specificity.</li>
-<li>Use pkgdown (or Quarto) to embed plots comparing original
-vs. detected anomalies for stakeholders.</li>
-</ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

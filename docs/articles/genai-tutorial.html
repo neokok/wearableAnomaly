@@ -59,113 +59,274 @@
     
     
 <div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<h2 id="genai-workflow-for-wearableanomaly">GenAI Workflow for wearableAnomaly<a class="anchor" aria-label="anchor" href="#genai-workflow-for-wearableanomaly"></a>
 </h2>
+<div class="section level3">
+<h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h3>
 <p>This vignette documents how generative AI tools helped build the
 <strong>wearableAnomaly</strong> package. It summarizes the prompts,
 workflows, and guardrails used while turning the Biostat 615 project
 outline into a reproducible R package.</p>
 </div>
-<div class="section level2">
-<h2 id="tools-used">Tools used<a class="anchor" aria-label="anchor" href="#tools-used"></a>
-</h2>
+<div class="section level3">
+<h3 id="tools-used">Tools used<a class="anchor" aria-label="anchor" href="#tools-used"></a>
+</h3>
 <ul>
 <li>
-<strong>ChatGPT</strong>: high-level planning, function specs, and
-prompt refinement.</li>
+<strong>ChatGPT</strong>: Used to plan, summarize goals, write
+“first prompts”, and convert vague goals into small, testable
+tasks.</li>
 <li>
-<strong>GitHub Copilot / Codex in VS Code</strong>: implementation,
-refactors, and inline completions.</li>
+<strong>OpenAI Codex Agent in VS Code</strong>: Used to make actual
+repo changes. Especially useful for editing multiple files consistently,
+adding tests, and cleaning up packaging details.</li>
+<li>
+<strong>Copilot Chat</strong>: Used similarly to Codex for smaller
+edits. The key was to constrain scope to one file or one task.</li>
 <li>
 <strong>pkgdown / R CMD check</strong>: final validation and
 documentation builds.</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="development-workflow">Development workflow<a class="anchor" aria-label="anchor" href="#development-workflow"></a>
-</h2>
+<div class="section level3">
+<h3 id="development-workflow">Development workflow<a class="anchor" aria-label="anchor" href="#development-workflow"></a>
+</h3>
+<p>This is the loop I followed from start to finish.</p>
+<div class="section level4">
+<h4 id="phase-1--plan-before-coding">Phase 1. Plan (before coding)<a class="anchor" aria-label="anchor" href="#phase-1--plan-before-coding"></a>
+</h4>
 <ol style="list-style-type: decimal">
-<li>
-<strong>Draft specs in ChatGPT</strong>: describe the function
-purpose, inputs, outputs, and invariants before writing code.</li>
-<li>
-<strong>Turn specs into Codex prompts</strong>: feed the scoped
-requirements into VS Code’s Codex agent for implementation.</li>
-<li>
-<strong>Code &amp; refactor in Codex</strong>: iterate on R/Rcpp
-functions, tests, and helper scripts, verifying each change
-locally.</li>
-<li>
-<strong>ChatGPT for API redesign</strong>: when internal schemas
-(nested tibbles, list columns) became confusing, use ChatGPT to reason
-about better interfaces.</li>
-<li>
-<strong>Test → Re-prompt cycle</strong>: run unit tests and
-benchmark scripts, note failures, then re-prompt ChatGPT/Codex with the
-failing scenario and desired fix.</li>
-<li>
-<strong>Document &amp; polish</strong>: after code stabilized, use
-the same workflow to produce README, vignettes, and pkgdown
-navigation.</li>
+<li>Draft specs in ChatGPT.
+<ul>
+<li>Define purpose, inputs, outputs, edge cases, and invariants.</li>
+<li>Decide the return schema up front (column names, types, units).</li>
+</ul>
+</li>
 </ol>
-<!-- Insert screenshot: example prompt iteration -->
 </div>
-<div class="section level2">
-<h2 id="example-prompts">Example prompts<a class="anchor" aria-label="anchor" href="#example-prompts"></a>
-</h2>
-<blockquote>
-<p><strong>Prompt (ChatGPT)</strong>: “Outline a
-<code>detect_rate_change</code> function for CGM data. Inputs: wa_ts,
-window, threshold, scaling (MAD/SD/none). Outputs: tibble with
-id,start,end,type,strength.”</p>
-</blockquote>
-<blockquote>
-<p><strong>Prompt (Codex)</strong>: “Given the spec above, implement the
-R function under R/artifacts.R, add roxygen comments, and plug into the
-existing merge pipeline.”</p>
-</blockquote>
-<blockquote>
-<p><strong>Prompt (ChatGPT)</strong>: “Given this failing test output
-(paste <code>test_pelt</code> diff), explain how to reconcile Rcpp and R
-implementations and update the penalty docs.”</p>
-</blockquote>
-<blockquote>
-<p><strong>Prompt (Codex)</strong>: “Refactor
-<code><a href="../reference/evaluate_methods.html">evaluate_methods()</a></code> so it accepts a list of prediction
-objects, attaches runtime metadata, and returns a tibble with
-method/runtime/precision/recall/F1/IoU/MAE as used in the slides.”</p>
-</blockquote>
-</div>
-<div class="section level2">
-<h2 id="what-worked-well">What worked well<a class="anchor" aria-label="anchor" href="#what-worked-well"></a>
-</h2>
+<div class="section level4">
+<h4 id="phase-2--implement-scoped-codex-changes">Phase 2. Implement (scoped Codex changes)<a class="anchor" aria-label="anchor" href="#phase-2--implement-scoped-codex-changes"></a>
+</h4>
+<ol start="2" style="list-style-type: decimal">
+<li>Convert the spec into a Codex prompt.
 <ul>
-<li>Rapid scaffolding of package structure and consistent naming.</li>
-<li>Generating Rcpp boilerplate (RcppExports, pelt_core.cpp,
-ed_core.cpp) with minimal hand-editing.</li>
-<li>Producing starter tests and roxygen templates that already matched
-standards.</li>
-<li>Quick iteration on README and vignette outlines before filling in
-real data.</li>
+<li>Constrain scope to 1 file or 1 feature.</li>
+<li>List concrete acceptance criteria (what must pass, what output must
+look like).</li>
+</ul>
+</li>
+<li>Implement and refactor in Codex.
+<ul>
+<li>Add or update R/Rcpp code.</li>
+<li>Add or update tests alongside the code.</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section level4">
+<h4 id="phase-3--validate-tight-feedback-loop">Phase 3. Validate (tight feedback loop)<a class="anchor" aria-label="anchor" href="#phase-3--validate-tight-feedback-loop"></a>
+</h4>
+<ol start="4" style="list-style-type: decimal">
+<li>Run locally and collect failures.
+<ul>
+<li><code><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">devtools::test()</a></code></li>
+<li>
+<code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code> when changes are bigger</li>
+<li>Bench scripts when performance is involved</li>
+</ul>
+</li>
+<li>Re-prompt with evidence.
+<ul>
+<li>Paste the failing output, the minimal reproduction, and the expected
+behavior.</li>
+<li>Ask for the smallest fix that preserves the current API.</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section level4">
+<h4 id="phase-4--stabilize-the-interface-when-things-get-messy">Phase 4. Stabilize the interface (when things get messy)<a class="anchor" aria-label="anchor" href="#phase-4--stabilize-the-interface-when-things-get-messy"></a>
+</h4>
+<ol start="6" style="list-style-type: decimal">
+<li>Use ChatGPT for API/schema redesign when needed.
+<ul>
+<li>If outputs or internal schemas become hard to reason about, pause
+and redesign.</li>
+<li>Then re-run Phase 2 to implement the new interface cleanly.</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section level4">
+<h4 id="phase-5--package-polish-after-code-is-stable">Phase 5. Package polish (after code is stable)<a class="anchor" aria-label="anchor" href="#phase-5--package-polish-after-code-is-stable"></a>
+</h4>
+<ol start="7" style="list-style-type: decimal">
+<li>Document and polish.
+<ul>
+<li>Update README examples so they run end-to-end.</li>
+<li>Write vignettes to match the final presentation narrative.</li>
+<li>Update pkgdown navigation so the story is easy to follow.</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<div class="section level3">
+<h3 id="step-by-step-examples">Step-by-step examples<a class="anchor" aria-label="anchor" href="#step-by-step-examples"></a>
+</h3>
+<p>This section gives concrete examples of the prompts I used and what I
+asked the agent to change. Each example follows the same pattern.</p>
+<ol style="list-style-type: decimal">
+<li>Goal.</li>
+<li>Prompt.</li>
+<li>What I checked locally to confirm it worked.</li>
+</ol>
+<div class="section level4">
+<h4 id="example-1--create-a-first-prompt-so-the-agent-understands-project-goals">Example 1. Create a “first prompt” so the agent understands project
+goals<a class="anchor" aria-label="anchor" href="#example-1--create-a-first-prompt-so-the-agent-understands-project-goals"></a>
+</h4>
+<p><strong>Goal.</strong> Codex could not read my slides or PDFs
+directly, so I used ChatGPT to produce a reusable “first prompt” that
+captures what the repo should contain and what “done” means.</p>
+<p><strong>Prompt (ChatGPT).</strong></p>
+<p><img src="figures/cant_read_files.png"></p>
+<p><strong>What I validated.</strong></p>
+<ul>
+<li>The “first prompt” listed concrete repo requirements
+(installability, core functions, documentation, and GenAI
+tutorial).</li>
+<li>The prompt was structured so I could paste it into Codex
+unchanged.</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="what-didnt-work-well">What didn’t work well<a class="anchor" aria-label="anchor" href="#what-didnt-work-well"></a>
-</h2>
+<div class="section level4">
+<h4 id="example-2--targeted-readme-edit-high-leverage-low-risk">Example 2. Targeted README edit (high leverage, low risk)<a class="anchor" aria-label="anchor" href="#example-2--targeted-readme-edit-high-leverage-low-risk"></a>
+</h4>
+<p><strong>Goal.</strong> Make README match the real exported functions
+and include a runnable quickstart example.</p>
+<p><strong>Prompt (ChatGPT -&gt; Codex).</strong></p>
+<p><img src="figures/response_readme.png"></p>
+<p><strong>What I validated.</strong></p>
 <ul>
-<li>Nested tibble/list schemas often confused Codex; manual fixes were
-required.</li>
-<li>Ambiguous prompts yielded incorrect column names or wrong units
-(minutes vs seconds).</li>
-<li>Complex statistical reasoning (penalties, energy distance variants)
-still needed hand-derived formulas.</li>
-<li>Without precise specs, Codex hallucinated helper functions or forgot
-to update tests.</li>
+<li>README examples run from a clean session.</li>
+<li>The function list in README matches NAMESPACE exports.</li>
+<li>No unrelated files changed.</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="validation-strategy">Validation strategy<a class="anchor" aria-label="anchor" href="#validation-strategy"></a>
-</h2>
+<div class="section level4">
+<h4 id="example-2b--capture-the-result-as-evidence-agent-confirmation">Example 2b. Capture the result as evidence (agent confirmation)<a class="anchor" aria-label="anchor" href="#example-2b--capture-the-result-as-evidence-agent-confirmation"></a>
+</h4>
+<p><strong>Goal.</strong> Save a clear “before moving on” checkpoint
+that the README work actually landed.</p>
+<p><strong>Evidence (Codex output).</strong></p>
+<p><img src="figures/check_output.png"></p>
+<p><strong>What I validated.</strong> - The change described in the
+output matches what I see in <code>README.md</code>. - Running the
+README quickstart works locally.</p>
+</div>
+<div class="section level4">
+<h4 id="example-2c--turn-the-checkpoint-into-the-next-targeted-prompt">Example 2c. Turn the checkpoint into the next targeted prompt<a class="anchor" aria-label="anchor" href="#example-2c--turn-the-checkpoint-into-the-next-targeted-prompt"></a>
+</h4>
+<p><strong>Goal.</strong> After the README was aligned, ask ChatGPT for
+the next prompt that targets the next step in the cleanup plan.</p>
+<p><strong>Prompt (ChatGPT).</strong></p>
+<p><img src="figures/next_step.png"></p>
+<p><strong>What I validated.</strong> - The suggested next prompt was
+scoped to one task. - It moved the project forward without reopening the
+whole repo plan.</p>
+</div>
+<div class="section level4">
+<h4 id="example-3--read-only-redundancy-audit-before-cleanup">Example 3. Read-only redundancy audit before cleanup<a class="anchor" aria-label="anchor" href="#example-3--read-only-redundancy-audit-before-cleanup"></a>
+</h4>
+<p><strong>Goal.</strong> Identify redundant or confusing files that
+should be removed or clearly quarantined, without making changes
+yet.</p>
+<p><strong>Prompt (ChatGPT -&gt; Codex).</strong></p>
+<p><img src="figures/remove_redundancies.png"></p>
+<p><strong>What I validated.</strong></p>
+<ul>
+<li>The output produced a concrete “keep vs drop” list.</li>
+<li>The recommendations were easy to convert into small cleanup
+tasks.</li>
+</ul>
+</div>
+</div>
+<div class="section level3">
+<h3 id="guardrails-i-used">Guardrails I used<a class="anchor" aria-label="anchor" href="#guardrails-i-used"></a>
+</h3>
+<ul>
+<li>These rules helped keep changes safe and made it easier to
+debug.</li>
+<li>Keep scope small. One file or one feature per prompt.</li>
+<li>Require acceptance criteria. Always specify what success looks
+like.</li>
+<li>Always run tests after changes.</li>
+<li>Prefer minimal fixes over rewrites.</li>
+<li>When behavior is ambiguous, pause and redesign the interface before
+adding more code.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="what-worked-well">What worked well<a class="anchor" aria-label="anchor" href="#what-worked-well"></a>
+</h3>
+<ul>
+<li>
+<strong>Scaffolding and consistency</strong>. ChatGPT was good at
+turning a high-level outline into a coherent package plan (function
+names, responsibilities, and how pieces connect). This reduced early
+“design churn” and made later implementation more systematic.</li>
+<li>
+<strong>Small, scoped edits</strong>. Codex performed best when I
+constrained the task to one file or one feature and gave explicit
+acceptance criteria (expected columns, return types, edge cases, and
+what tests should pass).</li>
+<li>
+<strong>Documentation acceleration</strong>. Drafting README and
+vignette structure was fast, and it was easy to iterate on wording and
+organization before filling in details.</li>
+<li>
+<strong>Boilerplate generation</strong>. Rcpp skeletons, roxygen
+templates, and initial test scaffolds were high value because they are
+repetitive, but still require consistent formatting and naming.</li>
+<li>
+<strong>Debugging with evidence</strong>. When I supplied failing
+outputs and a minimal reproduction, Codex often found a precise fix
+quickly, especially for small off-by-one errors, missing
+imports/exports, and documentation mismatches.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="what-didnt-work-well">What didn’t work well<a class="anchor" aria-label="anchor" href="#what-didnt-work-well"></a>
+</h3>
+<ul>
+<li>
+<strong>Ambiguity amplified quickly</strong>. If I did not specify
+schema details (column names, units, and types), Codex frequently
+guessed incorrectly. The most common failures were unit mismatches
+(seconds vs minutes), inconsistent column naming, and small differences
+from my intended return structure.</li>
+<li>
+<strong>Complex internal data structures</strong>. Nested tibbles
+and list-columns were more error-prone for the agent. Even when the code
+“worked”, the outputs were sometimes awkward to consume, which forced an
+API redesign step.</li>
+<li>
+<strong>Long prompts and broad scope</strong>. Multi-file refactors
+in a single prompt often led to partial updates (tests not updated, docs
+drifting from exports, or helper functions invented but not wired
+in).</li>
+<li>
+<strong>Methods logic still needed human control</strong>. For
+changepoint details and statistical design decisions (e.g., penalty
+choices, energy-distance variants), GenAI was useful for implementation
+ideas and structure, but I still had to define the correct approach and
+verify the behavior carefully.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="validation-strategy">Validation strategy<a class="anchor" aria-label="anchor" href="#validation-strategy"></a>
+</h3>
 <ul>
 <li>
 <strong>Unit tests</strong>: ran <code>tests/testthat/</code> after
@@ -173,33 +334,52 @@ each major change; many Codex-generated snippets failed initially and
 required re-prompts.</li>
 <li>
 <strong>Comparator benchmarks</strong>: compared wearableAnomaly
-PELT/E-divisive to <a href="https://github.com/rkillick/changepoint/" class="external-link">changepoint</a> and <code>{ecp}</code>
-(when installed) using the bench scripts and
+PELT/E-divisive to <a href="https://github.com/rkillick/changepoint/" class="external-link">changepoint</a> and
+<code>{ecp}</code> (when installed) using the bench scripts and
 <code>evaluate_methods</code>.</li>
 <li>
 <strong>Visual inspection</strong>: used the workflow vignette’s
 episode tables + overlay plot to verify detectors/changepoints.</li>
 <li>
-<strong>pkgdown/site builds</strong>: forced
-<code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code> to ensure documentation matched the
-exported API.</li>
+<strong>pkgdown/site builds</strong>: forced <a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link"><code>pkgdown::build_site()</code></a>
+to ensure documentation matched the exported API.</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="lessons-learned-advice">Lessons learned / advice<a class="anchor" aria-label="anchor" href="#lessons-learned-advice"></a>
-</h2>
+<div class="section level3">
+<h3 id="lessons-learned-advice">Lessons learned / advice<a class="anchor" aria-label="anchor" href="#lessons-learned-advice"></a>
+</h3>
 <ul>
-<li>Write precise mini-specs before prompting; ambiguity amplifies
-hallucinations.</li>
-<li>Treat AI output as a draft—tests and benchmarks are
-non-negotiable.</li>
-<li>Iterative prompt adjustments beat one long mega prompt.</li>
-<li>Let AI handle repetitive scaffolding, but keep humans in charge of
-statistical logic.</li>
-<li>Capture the workflow (like this vignette) so reviewers see the GenAI
-contribution.</li>
+<li>
+<strong>Start with a mini-spec, not code</strong>. Write down
+purpose, inputs, outputs, invariants, and a concrete return schema
+first. Then prompt. This was the best way to prevent “almost-right”
+implementations.</li>
+<li>
+<strong>Make prompts test-driven</strong>. For any non-trivial
+change, I included acceptance criteria like “add tests that fail before
+the change and pass after” and “run <code><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">devtools::test()</a></code> after
+editing”. This kept the work grounded.</li>
+<li>
+<strong>Keep scope intentionally small</strong>. One file or one
+feature per prompt is dramatically easier to validate and debug than a
+broad refactor.</li>
+<li>
+<strong>Always provide evidence when debugging</strong>. The most
+effective debugging prompts included the failing test output, a minimal
+reproduction, and the exact expected behavior. This reliably produced
+smaller, safer fixes.</li>
+<li>
+<strong>Use GenAI for speed, not authority</strong>. It excelled at
+scaffolding, repetitive edits, and drafting documentation, but I treated
+all outputs as drafts until tests, benchmarks, and end-to-end examples
+confirmed the behavior.</li>
+<li>
+<strong>Pause and redesign when the interface gets
+confusing</strong>. If the output schema became hard to explain or use,
+it was worth stopping to simplify the API instead of piling on more
+patches.</li>
 </ul>
-<!-- Insert screenshot: summarized prompt vs final code -->
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

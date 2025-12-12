@@ -59,7 +59,7 @@ The detectors all return tibbles, so you can `dplyr::arrange()`/`plot()`/export 
 - **Pkgdown site**: rebuildable HTML reference under [`docs/`](docs/index.html) (open locally or host via GitHub Pages).
 - **Vignettes**: `vignettes/workflow.Rmd` for the end-to-end analysis and `vignettes/rcpp-comparison.Rmd` for R vs. Rcpp backend details.
 - **Benchmarks**: `bench/bench_pelt.R` contains the interactive PELT timing script; expanded benchmark articles (including speed/accuracy tables) live or will live under `docs/articles/`.
-- **GenAI tutorial**: See the new GenAI workflow vignette (`vignettes/genai-tutorial.Rmd`) or the pkgdown Articles → “GenAI workflow” page for prompts, tooling, and lessons learned.
+- **GenAI tutorial**: Read the [`GenAI workflow tutorial`](https://neokok.github.io/wearableAnomaly/articles/genai-tutorial.html) (same destination as the pkgdown Home → “GenAI workflow tutorial” link) for the exact prompts, tooling, screenshots, and lessons learned from building the package with AI assistance; the underlying source lives in `vignettes/genai-tutorial.Rmd`.
 
 ## Function reference (current exports)
 

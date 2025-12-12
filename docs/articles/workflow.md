@@ -70,7 +70,7 @@ The artifact detectors operate on the resampled tibble:
 ``` r
 
 ts_5min <- resample_series(ts, by = "5 min", agg = "mean")
-flat <- detect_flatlines(ts_5min, tol = 1e-5, min_len = "20 min")
+flat <- detect_flatlines(ts_5min, tol = 2, min_len = "20 min")
 sat  <- detect_saturation(ts_5min, min_len = "15 min")
 roc  <- detect_rate_change(ts_5min, window = "20 min", threshold = 3)
 ```
@@ -162,7 +162,7 @@ subject <- dplyr::filter(series, id == unique(series$id))
 ts_one <- as_wearable_ts(subject, id = id, time = time, value = value)
 ts_reg <- resample_series(ts_one, by = "5 min", agg = "mean")
 
-flat_one <- detect_flatlines(ts_reg, min_len = "15 min", tol = 1e-5)
+flat_one <- detect_flatlines(ts_reg, min_len = "15 min", tol = 2)
 sat_one <- detect_saturation(ts_reg, min_len = "15 min")
 roc_one <- detect_rate_change(ts_reg, window = "20 min", threshold = 3)
 pelt_one <- detect_changepoints_pelt(ts_reg, penalty = "MBIC", min_seg_len = 12)
@@ -179,8 +179,9 @@ knitr::kable(
 )
 ```
 
-| id  | start_time | end_time | duration_min | value |
-|-----|------------|----------|--------------|-------|
+| id    | start_time          | end_time            | duration_min | value |
+|:------|:--------------------|:--------------------|-------------:|------:|
+| id001 | 2025-01-01 06:10:00 | 2025-01-01 06:25:00 |           15 | 120.8 |
 
 Flatline episodes {.table}
 
@@ -329,11 +330,3 @@ computes precision, recall, F1, and IoU with an adjustable tolerance:
 metrics <- evaluate_methods(pred = results$segments, truth = labels, tolerance = "10 min")
 metrics
 ```
-
-## Next steps
-
-- Add domain-specific bounds (`lower`, `upper`) to
-  [`as_wearable_ts()`](https://neokok.github.io/wearableAnomaly/reference/as_wearable_ts.md).
-- Experiment with the `"clinical"` preset for higher specificity.
-- Use pkgdown (or Quarto) to embed plots comparing original vs. detected
-  anomalies for stakeholders.

@@ -5,6 +5,10 @@ url: https://neokok.github.io/wearableAnomaly
 
 home:
   title: "wearableAnomaly: anomaly detection for wearable time series"
+  links:
+    - text: "GenAI workflow tutorial"
+      href: articles/genai-tutorial.html
+      icon: fa-wand-magic-sparkles
 
 reference:
   - title: Package overview
