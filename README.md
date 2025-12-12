@@ -1,6 +1,6 @@
 # wearableAnomaly
 
-R tooling for ingesting continuous glucose monitor (CGM)–style signals, spotting artifacts, and flagging changepoints in a reproducible pipeline.
+R tooling for ingesting wearable device-style signals (like continuous glucose monitoring (CGM)), spotting artifacts, and flagging changepoints in a reproducible pipeline.
 
 ## Overview
 
