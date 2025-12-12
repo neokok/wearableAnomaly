@@ -92,8 +92,7 @@ them directly or feed them into evaluation utilities.
 ## Documentation
 
 - **Pkgdown site**: rebuildable HTML reference under
-  [`docs/`](https://neokok.github.io/wearableAnomaly/docs/index.md)
-  (open locally or host via GitHub Pages).
+  [`docs/`](https://neokok.github.io/wearableAnomaly/docs/index.md).
 - **Vignettes**: `vignettes/workflow.Rmd` for the end-to-end analysis
   and `vignettes/rcpp-comparison.Rmd` for R vs. Rcpp backend details.
 - **Benchmarks**: `bench/bench_pelt.R` contains the interactive PELT
@@ -101,10 +100,9 @@ them directly or feed them into evaluation utilities.
   tables) live or will live under `docs/articles/`.
 - **GenAI tutorial**: Read the
   [`GenAI workflow tutorial`](https://neokok.github.io/wearableAnomaly/articles/genai-tutorial.html)
-  (same destination as the pkgdown Home → “GenAI workflow tutorial”
-  link) for the exact prompts, tooling, screenshots, and lessons learned
-  from building the package with AI assistance; the underlying source
-  lives in `vignettes/genai-tutorial.Rmd`.
+  for the exact prompts, tooling, screenshots, and lessons learned from
+  building the package with AI assistance; the underlying source lives
+  in `vignettes/genai-tutorial.Rmd`.
 
 ## Function reference (current exports)
 
